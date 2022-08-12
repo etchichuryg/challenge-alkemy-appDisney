@@ -12,7 +12,7 @@ import com.alkemy.challenge.model.Characters;
 public interface CharactersRepository extends JpaRepository <Characters, Integer> {
 	
 	public Iterable<Object[]>findByName(String name);
-	public Iterable<Object[]>findByAge(String age);
+	public Iterable<Object[]>findByAge(Integer age);
 	@Query(value = "SELECT image, name from characters;" ,nativeQuery = true)
 	public Iterable<Object[]>getAll();
 	public List<Object[]>findByfilmsID(String movie);
