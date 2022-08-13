@@ -1,17 +1,16 @@
-/*package com.alkemy.challenge.security.token;
+package com.alkemy.challenge.security.token;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
-
 @Service
-@AllArgsConstructor
 public class ConfirmationTokenService {
 	
-	private final ConfirmationToken confirmationTokenRepository = null;
+	@Autowired
+	ConfimationTokenRepository confirmationTokenRepository; 
 
     public void saveConfirmationToken(ConfirmationToken token) {
         confirmationTokenRepository.save(token);
@@ -24,6 +23,6 @@ public class ConfirmationTokenService {
     public int setConfirmedAt(String token) {
         return confirmationTokenRepository.updateConfirmedAt( token, LocalDateTime.now());
     }
+	
 
 }
-*/

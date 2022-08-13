@@ -6,12 +6,14 @@ import javax.persistence.*;
 
 
 @Entity
+@NamedQuery(name="Genders.findAll", query="SELECT genders FROM Genders genders")
 @Table
 public class Genders {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	private Integer genderid;
+	@Column(name="genders_id")
+	private Integer id;
 	private String name;
 	private String image;
 	
@@ -23,20 +25,20 @@ public class Genders {
 		
 	}
 
-	public Genders(Integer genderid, String name, String image, List<Movies> movies) {
+	public Genders(Integer id, String name, String image, List<Movies> movies) {
 		super();
-		this.genderid = genderid;
+		this.id = id;
 		this.name = name;
 		this.image = image;
 		this.movies = movies;
 	}
 
-	public Integer getGenderid() {
-		return genderid;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setGenderid(Integer genderid) {
-		this.genderid = genderid;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -65,7 +67,7 @@ public class Genders {
 
 	@Override
 	public String toString() {
-		return "Genders [genderid=" + genderid + ", name=" + name + ", image=" + image + ", movies=" + movies + "]";
+		return "Genders [id=" + id + ", name=" + name + ", image=" + image + ", movies=" + movies + "]";
 	}
 	
 }

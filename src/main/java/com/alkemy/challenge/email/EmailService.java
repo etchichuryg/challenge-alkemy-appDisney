@@ -1,4 +1,4 @@
-/*package com.alkemy.challenge.email;
+package com.alkemy.challenge.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,4 +39,3 @@ public class EmailService implements EmailSender {
 	
 
 }
-*/

@@ -1,19 +1,29 @@
 package com.alkemy.challenge.model;
 
-import java.util.Date;
+
+
+
+import java.io.Serializable;
+import java.util.Date; 
 import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Movies.findAll", query="SELECT movies FROM Movies movies")
 @Table
-public class Movies {
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+public class Movies implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@Id
-	private Integer movieid;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="movies_id")
+	private Integer id;
 	private String title;
 	private String image;
-	private Date create_date;
+	@Temporal(TemporalType.DATE)
+	@Column(name="create_date")
+	private Date createDate;
 	private Integer rating;
 	
 	@ManyToMany
@@ -24,22 +34,22 @@ public class Movies {
 	public Movies() {
 		
 	}
-	public Movies(Integer movieid, String title, String image, Date create_date, Integer rating,
+	public Movies(Integer id, String title, String image, Date createDate, Integer rating,
 			List<Characters> characters, Genders genders) {
 		super();
-		this.movieid = movieid;
+		this.id = id;
 		this.title = title;
 		this.image = image;
-		this.create_date = create_date;
+		this.createDate = createDate;
 		this.rating = rating;
 		this.characters = characters;
 		this.genders = genders;
 	}
-	public Integer getMovieid() {
-		return movieid;
+	public Integer getId() {
+		return id;
 	}
-	public void setMovieid(Integer movieid) {
-		this.movieid = movieid;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getTitle() {
 		return title;
@@ -53,11 +63,11 @@ public class Movies {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public Date getCreate_date() {
-		return create_date;
+	public Date getCreateDate() {
+		return createDate;
 	}
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 	public Integer getRating() {
 		return rating;
@@ -79,8 +89,8 @@ public class Movies {
 	}
 	@Override
 	public String toString() {
-		return "Movies [movieid=" + movieid + ", title=" + title + ", image=" + image + ", create_date=" + create_date
-				+ ", rating=" + rating + ", characters=" + characters + ", genders=" + genders + "]";
+		return "Movies [id=" + id + ", title=" + title + ", image=" + image + ", create_date=" + createDate
+				+", rating=" + rating + ", characters=" + characters + ", genders=" + genders + "]";
 	}
 	
 	

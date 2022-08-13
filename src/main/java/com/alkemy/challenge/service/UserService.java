@@ -6,4 +6,5 @@ public interface UserService {
 	
 	 public String signUpUser(User user);
 	 public int enableUser(String email);
+	
 }

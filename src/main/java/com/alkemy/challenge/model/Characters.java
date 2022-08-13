@@ -20,7 +20,7 @@ public class Characters {
 	@ManyToMany
 	@JoinTable(name="characters_movies",
 			joinColumns= { @JoinColumn(name="characterid", nullable=false)},
-			inverseJoinColumns= {@JoinColumn(name="movieid", nullable=false)})
+			inverseJoinColumns= {@JoinColumn(name="id", nullable=false)})
 	private List<Movies> filmsID; 
 	
 	public Characters(){
@@ -36,7 +36,7 @@ public class Characters {
 		this.age = age;
 		this.weight = weight;
 		this.history = history;
-	//	this.movies = movies;
+	
 	}
 
 	public Integer getCharacterid() {
@@ -87,14 +87,6 @@ public class Characters {
 		this.history = history;
 	}
 
-/*	public Movies getMovies() {
-		return movies;
-	}
-
-	public void setMovies(Movies movies) {
-		this.movies = movies;
-	}
-*/
 	@Override
 	public String toString() {
 		return "Characters [characterid=" + characterid + ", name=" + name + ", image=" + image + ", age=" + age

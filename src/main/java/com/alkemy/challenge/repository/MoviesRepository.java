@@ -1,6 +1,7 @@
 package com.alkemy.challenge.repository;
 
-import java.util.Optional;
+import java.util.List;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,18 +12,21 @@ import com.alkemy.challenge.model.Movies;
 @Repository
 public interface MoviesRepository extends JpaRepository<Movies, Integer>{
 	
-	public Iterable<Object[]>findByTitle(String title);
-	public Optional<Movies>findById(Integer id);
-	
-	@Query(value = "SELECT title,image,creation_date FROM movies",nativeQuery = true)
-    public Iterable<Object[]> getAll();
+	//public List<Movies>findByTitle(String title);
+//   public Movies getById(Integer id);
 
-    @Query(value = "SELECT title,image,creation_date FROM movies ORDER BY creation_date ASC",nativeQuery = true)
-    public Iterable<Object[]> getAllByOrderASC();
+   
+   /*
+	@Query(value = "SELECT title,image,create_date FROM movies",nativeQuery = true)
+    public List<Movies> getAll();
 
-    @Query(value = "SELECT title,image,creation_date FROM movies ORDER BY creation_date DESC",nativeQuery = true)
-    public Iterable<Object[]> getAllByOrderDESC();
+    @Query(value = "SELECT title,image,create_date FROM movies ORDER BY create_date ASC",nativeQuery = true)
+    public List<Movies> getAllByOrderASC();
+
+    @Query(value = "SELECT title,image,create_date FROM movies ORDER BY create_date DESC",nativeQuery = true)
+    public List<Movies> getAllByOrderDESC();
     
-    public Movies getById(Integer movieId);
+*/
+   
 
 }
