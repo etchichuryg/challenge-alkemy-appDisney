@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alkemy.challenge.exception.ResourceNotFoundException;
+
 import com.alkemy.challenge.model.Movies;
 import com.alkemy.challenge.repository.MoviesRepository;
 
@@ -25,6 +25,14 @@ public class MoviesServiceImpl implements MoviesService {
 	public Optional<Movies> getById(Integer id) {
 		return moviesRepository.findById(id);
 		
+	}
+	
+	public Movies create (Movies movies) {
+		return moviesRepository.save(movies);
+	}
+	
+	public void delete (Integer id) {
+		moviesRepository.deleteById(id);
 	}
 	/*
 	@Override
@@ -50,21 +58,12 @@ public class MoviesServiceImpl implements MoviesService {
 		
 	}
 
-	@Override
-	public boolean delete(Integer id) {
-		moviesRepository.deleteById(id);
-		return true;
-	}
-
 	public List<Movies>findByTitle(String title){
 		return moviesRepository.findByTitle(title);
 	}
 
 
-	@Override
-	public Movies get(Integer id) throws ResourceNotFoundException {
-		return moviesRepository.getById(id);
-		}
+	
 
 */
 

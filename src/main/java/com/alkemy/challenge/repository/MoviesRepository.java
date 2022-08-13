@@ -13,7 +13,7 @@ import com.alkemy.challenge.model.Movies;
 public interface MoviesRepository extends JpaRepository<Movies, Integer>{
 	
 	//public List<Movies>findByTitle(String title);
-//   public Movies getById(Integer id);
+
 
    
    /*
