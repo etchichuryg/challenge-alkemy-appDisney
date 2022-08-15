@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
-@NamedQuery(name="Movies.findAll", query="SELECT movies FROM Movies movies")
 @Table
 public class Movies implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,23 +19,30 @@ public class Movies implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="movies_id")
 	private Integer id;
+	
+	@NotEmpty
 	private String title;
+	
 	private String image;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="create_date")
 	private Date createDate;
+	
+	@Min(1)
+	@Max(5)
 	private Integer rating;
 	
 	@ManyToMany
 	private List<Characters> characters;
-	@ManyToOne
-	private Genders genders;
+	/*@ManyToOne
+	private Genders genders;*/
 	
 	public Movies() {
 		
 	}
 	public Movies(Integer id, String title, String image, Date createDate, Integer rating,
-			List<Characters> characters, Genders genders) {
+			List<Characters> characters/*, Genders genders*/) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -43,8 +50,15 @@ public class Movies implements Serializable {
 		this.createDate = createDate;
 		this.rating = rating;
 		this.characters = characters;
-		this.genders = genders;
+	//	this.genders = genders;
 	}
+	
+	public Movies( String title, String image, Date createDate) {
+		super();
+		this.title = title;
+		this.image = image;
+		this.createDate = createDate;
+	}	
 	public Integer getId() {
 		return id;
 	}
@@ -81,16 +95,16 @@ public class Movies implements Serializable {
 	public void setCharacters(List<Characters> characters) {
 		this.characters = characters;
 	}
-	public Genders getGenders() {
+	/*public Genders getGenders() {
 		return genders;
 	}
 	public void setGenders(Genders genders) {
 		this.genders = genders;
-	}
+	}*/
 	@Override
 	public String toString() {
 		return "Movies [id=" + id + ", title=" + title + ", image=" + image + ", create_date=" + createDate
-				+", rating=" + rating + ", characters=" + characters + ", genders=" + genders + "]";
+				+", rating=" + rating + ", characters=" + characters /*+ ", genders=" + genders*/ + "]";
 	}
 	
 	

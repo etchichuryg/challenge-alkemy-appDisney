@@ -17,9 +17,9 @@ public class Genders {
 	private String name;
 	private String image;
 	
-	
+/*
 	@OneToMany(mappedBy ="genders")
-	private List<Movies> movies;
+	private List<Movies> movies;*/
 	
 	public Genders() {
 		
