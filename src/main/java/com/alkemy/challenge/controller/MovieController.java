@@ -72,16 +72,22 @@ public class MovieController {
 	public List<MovieDTO> getByGenere(@RequestParam("genre") Integer id) {
 		return movieService.findByIdGenre(id);
 	}
-	/*  @PostMapping("{id}/character/{idCharacter}")
-  public ResponseEntity<Void> addCharacter(@PathVariable Long id, @PathVariable Long idCharacter) {
-    this.movieService.addCharacter(id, idCharacter);
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+	
+	@PostMapping("{id}/characters/{idCharacter}")
+	public ResponseEntity<Void> addCharacters(@PathVariable Integer id, @PathVariable Integer idCharacter) {
+    boolean isProcessed = movieService.addCharacters(id, idCharacter);
+    if(isProcessed) {
+    return ResponseEntity.status(HttpStatus.OK).build();
+    }else {
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        	
+    }
   }
 
-  @DeleteMapping("{id}/character/{idCharacter}")
-  public ResponseEntity<Void> removeCharacter(@PathVariable Long id, @PathVariable Long idCharacter) {
-    this.movieService.removeCharacter(id, idCharacter);
+	@DeleteMapping("{id}/characters/{idCharacter}")
+	public ResponseEntity<Void> removeCharacters(@PathVariable Integer id, @PathVariable Integer idCharacter) {
+    movieService.removeCharacters(id, idCharacter);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-  }*/
+  }
 
 }
