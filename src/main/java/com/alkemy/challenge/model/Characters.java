@@ -1,50 +1,63 @@
 package com.alkemy.challenge.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table
-public class Characters {
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+@Table(name = "characters")
+
+public class Characters implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	private Integer characterid;
+	private Integer idCharacter;
+
+	@NotEmpty
 	private String name;
-	private String image;
+
+	@JsonIgnore
+	@Lob
+	private byte[] image;
+
+	@NotNull
+	@Min(1)
 	private Integer age;
+
+	@NotNull
+	@Min(1)
 	private Integer weight;
+
+	@NotEmpty
 	private String history;
-	
-	@ManyToMany
-	@JoinTable(name="characters_movies",
-			joinColumns= { @JoinColumn(name="characterid", nullable=false)},
-			inverseJoinColumns= {@JoinColumn(name="id", nullable=false)})
-	private List<Movies> filmsID; 
-	
-	public Characters(){
-		
+
+	@JsonIgnoreProperties(value = { "characters" }, allowSetters = true)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinTable(name = "characters_movies", joinColumns = {
+			@JoinColumn(name = "id_character", nullable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "id_movie", nullable = false) })
+	private List<Movie> movies;
+
+	public Characters() {
+		this.movies = new ArrayList<>();
+
 	}
 
-	public Characters(Integer characterid, String name, String image, Integer age, Integer weight, String history,
-			Movies movies) {
-		super();
-		this.characterid = characterid;
-		this.name = name;
-		this.image = image;
-		this.age = age;
-		this.weight = weight;
-		this.history = history;
-	
+	public Integer getIdCharacter() {
+		return idCharacter;
 	}
 
-	public Integer getCharacterid() {
-		return characterid;
-	}
-
-	public void setCharacterid(Integer characterid) {
-		this.characterid = characterid;
+	public void setIdCharacter(Integer idCharacter) {
+		this.idCharacter = idCharacter;
 	}
 
 	public String getName() {
@@ -55,11 +68,11 @@ public class Characters {
 		this.name = name;
 	}
 
-	public String getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
@@ -87,13 +100,43 @@ public class Characters {
 		this.history = history;
 	}
 
+	public List<Movie> getMovies() {
+		return movies;
+	}
+
+	public void setMovies(List<Movie> movies) {
+		this.movies.clear();
+		movies.forEach(this::addMovie);
+	}
+
+	public void addMovie(Movie movie) {
+		this.movies.add(movie);
+		movie.getCharacters().add(this);
+	}
+
+	public void removeMovie(Movie movie) {
+		this.movies.remove(movie);
+		movie.getCharacters().remove(this);
+	}
+
+	@JsonIgnore
+	public Integer getImagenHashCode() {
+		return (this.image != null) ? this.image.hashCode() : null;
+	}
+
 	@Override
 	public String toString() {
-		return "Characters [characterid=" + characterid + ", name=" + name + ", image=" + image + ", age=" + age
-				+ ", weight=" + weight + ", history=" + history + "]";
+		return "Characters [idCharacter=" + idCharacter + ", name=" + name + ", image=" + Arrays.toString(image)
+				+ ", age=" + age + ", weight=" + weight + ", history=" + history + "]";
 	}
+
 	
-	
+	public void setNewCharacter(Movie movie, Integer idCharacters  ) {
+		this.idCharacter = idCharacters;
+		this.movies.add(movie);
+		this.movies.remove(movie);
+		
+	}
 	
 
 }

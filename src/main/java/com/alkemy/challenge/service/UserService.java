@@ -1,10 +1,17 @@
 package com.alkemy.challenge.service;
 
-import com.alkemy.challenge.model.User;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+
+
+import com.alkemy.challenge.dto.LoginRequestDTO;
+import com.alkemy.challenge.dto.RegisterRequestDTO;
 
 public interface UserService {
 	
-	 public String signUpUser(User user);
-	 public int enableUser(String email);
+	public Map<String, Object> saveUser(RegisterRequestDTO registerRequestDto) throws Exception;
 	
+	public ResponseEntity<?> loginUser(LoginRequestDTO loginRequestDTO);
+
 }

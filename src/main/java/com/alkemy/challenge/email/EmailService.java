@@ -1,41 +1,35 @@
 package com.alkemy.challenge.email;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import lombok.AllArgsConstructor;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
-public class EmailService implements EmailSender {
+public class EmailService {
 	
-	private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
-	private final JavaMailSender mailSender = null;
+	
+	@Autowired
+	public EmailConfig emailConfiguration;
+	
+	public JavaMailSender getJavaMailSender() {
+		JavaMailSenderImpl mailSenderImpl = new JavaMailSenderImpl();
+		mailSenderImpl.setHost(emailConfiguration.getHost());
+		mailSenderImpl.setPort(emailConfiguration.getPort());
+		mailSenderImpl.setUsername(emailConfiguration.getUsername());
+		mailSenderImpl.setPassword(emailConfiguration.getPassword());
+		return mailSenderImpl;
+	}
 
-	@Override
-	@Async
-	public void send(String to, String email) {
-		try {
-			MimeMessage mimeMessage = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper (mimeMessage, "utf-8");
-			helper.setText(email, true);
-			helper.setTo(to);
-			helper.setSubject("Confirm your email");
-			helper.setFrom("ginettetchichury@gmail.com");
-			mailSender.send(mimeMessage);
-		}catch(MessagingException e ) {
-			LOGGER.error ("failed to send email", e);
-			throw new IllegalStateException ("failed to send email");
-		}
-		
+	public void sendSimpleMessage(String to, String from, String subject, String text) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(to);
+		message.setSubject(subject);
+		message.setText(text);
+		message.setFrom(from);
+		getJavaMailSender().send(message);
 	}
 	
-
 }

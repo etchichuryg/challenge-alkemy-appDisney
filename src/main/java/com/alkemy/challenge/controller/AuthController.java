@@ -37,7 +37,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<?> saveUser(@RequestBody RegisterRequestDTO registerRequestDto) {
+	public ResponseEntity<?> saveUser(@RequestBody RegisterRequestDTO registerRequestDto) throws Exception {
 		Map<String, Object> responseMap = userService.saveUser(registerRequestDto);
 		return ResponseEntity.ok(responseMap);
 	}
