@@ -1,6 +1,7 @@
 package com.alkemy.challenge.controller;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +17,12 @@ import com.alkemy.challenge.model.Movie;
 import com.alkemy.challenge.repository.MovieRepository;
 import com.alkemy.challenge.service.MovieService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/movies")
 @CrossOrigin(origins = "http://localhost:4200")
+@SecurityRequirement(name = "bearerAuth")
 public class MovieController {
 
 	@Autowired
@@ -40,11 +44,11 @@ public class MovieController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<String> create(@RequestBody Movie newMovies) {
+	public ResponseEntity<String> create(@RequestBody Movie newMovies )throws IOException {
 		movieService.create(newMovies);
 		return new ResponseEntity<String>("Movie create", HttpStatus.OK);
 	}
-
+	
 	@PutMapping("/update")
 	public ResponseEntity<String> update(@RequestBody Movie movies) {
 		movieService.update(movies);

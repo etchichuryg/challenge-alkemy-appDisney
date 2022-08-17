@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import com.alkemy.challenge.model.Genre;
 import com.alkemy.challenge.service.GenreService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/genders")
 @CrossOrigin(origins = "http://localhost:4200")
+@SecurityRequirement(name = "bearerAuth")
 public class GenreController {
 
 	@Autowired

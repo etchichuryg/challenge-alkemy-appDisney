@@ -30,6 +30,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService jwtUserDetailsService;
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
+	
+	 private String[] WHITE_LIST = {"/auth/login", "/auth/register", "/auth/refresh",
+	            "/auth/*", "/v3/api-docs",
+	            "/configuration/ui",
+	            "/swagger-resources/**",
+	            "/swagger-ui.html",
+	            "/webjars/**",
+	            "/swagger-ui/**",
+	            "/v3/**",
+	            "/swagger-ui/**", 
+	            "/v3/api-docs/**",
+	            "/api-docs/swagger-config",
+	            "/api-docs"
+	    };
+
 
 	 @Autowired
 	    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -43,10 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    }
 	 @Override
 	    protected void configure(HttpSecurity httpSecurity) throws Exception {
+		 
 	        httpSecurity.csrf()
+
 	        .disable()
 	        .authorizeRequests()
-	        .antMatchers("/auth/*").permitAll()
+	        .antMatchers(WHITE_LIST).permitAll()
 	        .anyRequest()
 	        .authenticated().and().exceptionHandling()
 	        .authenticationEntryPoint((request, response, authException) -> {
@@ -60,4 +77,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	            response.getWriter().write(responseMsg);
 	        }).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	    }
+
+	@SuppressWarnings("unused")
+	private Object ignoring() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

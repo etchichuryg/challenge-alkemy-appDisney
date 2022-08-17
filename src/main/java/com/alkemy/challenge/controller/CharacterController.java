@@ -14,9 +14,12 @@ import com.alkemy.challenge.model.Characters;
 import com.alkemy.challenge.repository.CharacterRepository;
 import com.alkemy.challenge.service.CharacterService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/characters")
 @CrossOrigin(origins="http://localhost:4200")
+@SecurityRequirement(name = "bearerAuth")
 public class CharacterController {
 	
 	@Autowired
